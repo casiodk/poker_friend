@@ -2,6 +2,12 @@ class HandHistoryParser
 	attr_reader :path, :hands_array
 
 	def initialize(options={})
+		# for testing
+		Tournament.destroy_all
+		Table.destroy_all
+		Player.destroy_all
+		Hand.destroy_all
+		Placement.destroy_all
 		@path 				= options.fetch(:path, "#{ Rails.root }/doc/sunday.txt")
 		@hands_array 	= []
 	end
@@ -46,12 +52,9 @@ private
 
 			# Hand
 			hand_id 			= (/Hand #([\d]*?):/).match(hand_txt)[1]
-			hand 					= Hand.joins(table: :tournament).where("hands.uid = ? AND tables.uid = ? AND tournaments.uid = ?", hand_id, table.uid, tournament.uid).first_or_create(uid: hand_id, table: table)
+			button 				= (/Seat #([\d]*?) is the button/).match(hand_txt)[1]
+			hand 					= Hand.joins(table: :tournament).where("hands.uid = ? AND tables.uid = ? AND tournaments.uid = ?", hand_id, table.uid, tournament.uid).first_or_create(uid: hand_id, table: table, button: button)
 			puts hand.inspect
-
-			# button
-			button = (/Seat #([\d]*?) is the button/).match(hand_txt)[1]
-			puts "button: #{ button }"
 
 			(1..tournament.table_max).each do |num|
 				seat_name = (/Seat #{ num }: (...*?) /).match(hand_txt).to_a[1]
@@ -62,11 +65,13 @@ private
 					puts "start_chips #{ start_chips } "
 				
 					puts "seat #{ num }: #{ seat_name }" 
-					player = Player.where("name = ?", seat_name).first_or_create(name: seat_name)
-					ticket = Ticket.where("tournament_id = ? AND player_id = ?", tournament.id, player.id).first_or_create(tournament: tournament, player: player)
+					player 		= Player.where("name = ?", seat_name).first_or_create(name: seat_name)
+					ticket 		= Ticket.where("tournament_id = ? AND player_id = ?", tournament.id, player.id).first_or_create(tournament: tournament, player: player)
+					placement = Placement.where("player_id = ? AND hand_id = ?", player.id, hand.id).first_or_create(player: player, hand: hand, start_chips: start_chips, seat: num)
 
 					puts player.inspect
 					puts ticket.inspect
+					puts placement.inspect
 				end
 				puts "tournament players count #{ tournament.players.count }"
 			end

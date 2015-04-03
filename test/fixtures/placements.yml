@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  player_id: 
+  hand_id: 
+  seat: 1
+  start_chips: 1
+
+two:
+  player_id: 
+  hand_id: 
+  seat: 1
+  start_chips: 1

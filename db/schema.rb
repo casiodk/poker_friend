@@ -11,16 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403143406) do
+ActiveRecord::Schema.define(version: 20150403153308) do
 
   create_table "hands", force: :cascade do |t|
     t.string   "uid"
     t.integer  "table_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "button"
   end
 
   add_index "hands", ["table_id"], name: "index_hands_on_table_id"
+
+  create_table "placements", force: :cascade do |t|
+    t.integer  "player_id"
+    t.integer  "hand_id"
+    t.integer  "seat"
+    t.integer  "start_chips"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "placements", ["hand_id"], name: "index_placements_on_hand_id"
+  add_index "placements", ["player_id"], name: "index_placements_on_player_id"
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
