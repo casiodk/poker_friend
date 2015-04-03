@@ -12,20 +12,25 @@ class HandType
 		elsif straight_flush?
 
 		elsif quads?
-
+			@type_hash[:type] = "quads"
+			@type_hash[:array] = quads_array
 		elsif full_house?
-
+			@type_hash[:type] = "full_house"
+			@type_hash[:array] = [*trips_array, *pair_array]
 		elsif flush?
 			@type_hash[:type] = "flush"
 			@type_hash[:array] = flush
 		elsif straight?
 
 		elsif trips?
-
+			@type_hash[:type] = "trips"
+			@type_hash[:array] = trips_array
 		elsif two_pair?
-
-		elsif pair?
-
+			@type_hash[:type] = "two_pair"
+			@type_hash[:array] = pair_array
+		elsif one_pair?
+			@type_hash[:type] = "one_pair"
+			@type_hash[:array] = pair_array
 		else
 			@type_hash[:type] = "high_card"
 			@type_hash[:array] = high_card
@@ -45,11 +50,11 @@ private
 	end
 
 	def quads?
-		false
+		quads_array.count == 1
 	end
 
 	def full_house?
-		false
+		trips_array.count == 1 && pair_array.count >= 2
 	end
 
 	# FLUSH
@@ -58,31 +63,68 @@ private
 	end
 
 	def flush
-		flush_array = []
-		card_array.map.group_by { |c| c.to_s[1] }.each do |group|
-			flush_array += group[1] if group[1].count >= 5
+		a = []
+		suite_groups.each do |group|
+			a += group[1] if group[1].count >= 5
 		end
 
-		flush_array
+		a
 	end
 
-	def straight?
+	def straight?(c_array=card_array)
 		false
 	end
 
 	def trips?
-		false
+		trips_array.count >= 1
 	end
 
 	def two_pair?
-		false
+		pair_array.count >= 2
 	end
 
-	def pair?
-		false
+	def one_pair?
+		pair_array.count == 1
 	end
 
 	def high_card
 		card_array.sample(5)
+	end
+
+	def pair_array
+		@pair_array ||= generate_match_array(2)
+	end
+
+	def trips_array
+		@trips_array ||= generate_match_array(3)
+	end
+
+	def quads_array
+		@quads_array ||= generate_match_array(4)
+	end
+
+	def generate_match_array(num)
+		a = []
+		value_groups.each do |group|
+			a += [group[1]] if group[1].count == num
+		end
+		
+		a
+	end
+
+	def value_groups
+		@value_groups ||= generate_value_groups
+	end
+
+	def suite_groups
+		@suite_groups ||= generate_suite_groups
+	end
+
+	def generate_value_groups(c_array=card_array)
+		c_array.map.group_by { |c| c.to_s[0] } # c.to_s[0] = "As"[0] = "A"
+	end
+
+	def generate_suite_groups(c_array=card_array)
+		c_array.map.group_by { |c| c.to_s[1] } # c.to_s[1] = "Jd"[1] = "d"
 	end
 end
