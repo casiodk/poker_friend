@@ -31,3 +31,15 @@
 
 # table image
 
+
+
+# SPOT
+	# your eff_m
+	# actions before
+	# players to act behind + their eff_m
+	# your holdings strength
+	# your table image
+	# players tilt_factor
+	# tournament state
+	# fold_equity from players involved
+	
