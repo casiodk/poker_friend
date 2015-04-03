@@ -1,12 +1,5 @@
-class Card
-	attr_reader :suite, :val
-	
-	def initialize(options={})
-		@suite 	= options[:suite]
-		@val 		= options[:val]
-	end
-
-	def card
+class Card < ActiveRecord::Base
+	def to_s
 		"#{ val }#{ suite }"
 	end
 end

@@ -53,29 +53,40 @@ private
 			# Hand
 			hand_id 			= (/Hand #([\d]*?):/).match(hand_txt)[1]
 			button 				= (/Seat #([\d]*?) is the button/).match(hand_txt)[1]
-			hand 					= Hand.joins(table: :tournament).where("hands.uid = ? AND tables.uid = ? AND tournaments.uid = ?", hand_id, table.uid, tournament.uid).first_or_create(uid: hand_id, table: table, button: button)
-			puts hand.inspect
+			existing_hand = Hand.joins(table: :tournament).where("hands.uid = ? AND tables.uid = ? AND tournaments.uid = ?", hand_id, table.uid, tournament.uid).first
 
-			(1..tournament.table_max).each do |num|
-				seat_name = (/Seat #{ num }: (...*?) /).match(hand_txt).to_a[1]
 
-				if seat_name.present?
-					start_chips = (/Seat #{ num }: #{ seat_name.strip } \((...*?) in chips/).match(hand_txt).to_a[1]
-
-					puts "start_chips #{ start_chips } "
-				
-					puts "seat #{ num }: #{ seat_name }" 
-					player 		= Player.where("name = ?", seat_name).first_or_create(name: seat_name)
-					ticket 		= Ticket.where("tournament_id = ? AND player_id = ?", tournament.id, player.id).first_or_create(tournament: tournament, player: player)
-					placement = Placement.where("player_id = ? AND hand_id = ?", player.id, hand.id).first_or_create(player: player, hand: hand, start_chips: start_chips, seat: num)
-
-					puts player.inspect
-					puts ticket.inspect
-					puts placement.inspect
-				end
-				puts "tournament players count #{ tournament.players.count }"
-			end
 			
+			unless existing_hand.present?
+				hand = Hand.create(uid: hand_id, table: table, button: button)
+				puts hand.inspect
+
+				hero_name = (/Dealt to (...*?) /).match(hand_txt)[1]
+				puts "HERO #{ hero_name }"
+				glove = (/Dealt to #{ hero_name } \[(...*?)\]/).match(hand_txt)[1]
+				puts "DEALT #{ glove }"
+
+				(1..tournament.table_max).each do |num|
+					seat_name = (/Seat #{ num }: (...*?) /).match(hand_txt).to_a[1]
+
+					if seat_name.present?
+						start_chips = (/Seat #{ num }: #{ seat_name.strip } \((...*?) in chips/).match(hand_txt).to_a[1]
+
+						puts "start_chips #{ start_chips } "
+					
+						puts "seat #{ num }: #{ seat_name }" 
+						player 		= Player.where("name = ?", seat_name).first_or_create(name: seat_name)
+						ticket 		= Ticket.where("tournament_id = ? AND player_id = ?", tournament.id, player.id).first_or_create(tournament: tournament, player: player)
+						placement = Placement.where("player_id = ? AND hand_id = ?", player.id, hand.id).first_or_create(player: player, hand: hand, start_chips: start_chips, seat: num)
+
+						puts player.inspect
+						puts ticket.inspect
+						puts placement.inspect
+					end
+					puts "tournament players count #{ tournament.players.count }"
+				end
+			end
+
 			puts "###################################################################################################"
 		end
 	end
