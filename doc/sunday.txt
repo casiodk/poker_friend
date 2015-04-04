@@ -33,7 +33,7 @@ maXXmilian: calls 120
 *** RIVER *** [Tc 9c 7s Td] [Js]
 maXXmilian: checks 
 taube1981: checks 
-*** SHOW DOWN ***
+*** SHOW DOWN *** 
 maXXmilian: shows [Qh Jh] (two pair, Jacks and Tens)
 taube1981: shows [Jc As] (two pair, Jacks and Tens - Ace kicker)
 taube1981 collected 558 from pot

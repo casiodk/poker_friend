@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150403190722) do
+ActiveRecord::Schema.define(version: 20150403215942) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "cards", force: :cascade do |t|
     t.string   "suite"
@@ -21,7 +24,7 @@ ActiveRecord::Schema.define(version: 20150403190722) do
     t.integer  "placement_id"
   end
 
-  add_index "cards", ["placement_id"], name: "index_cards_on_placement_id"
+  add_index "cards", ["placement_id"], name: "index_cards_on_placement_id", using: :btree
 
   create_table "hands", force: :cascade do |t|
     t.string   "uid"
@@ -31,7 +34,8 @@ ActiveRecord::Schema.define(version: 20150403190722) do
     t.integer  "button"
   end
 
-  add_index "hands", ["table_id"], name: "index_hands_on_table_id"
+  add_index "hands", ["table_id"], name: "index_hands_on_table_id", using: :btree
+  add_index "hands", ["uid"], name: "index_hands_on_uid", using: :btree
 
   create_table "placements", force: :cascade do |t|
     t.integer  "player_id"
@@ -42,8 +46,8 @@ ActiveRecord::Schema.define(version: 20150403190722) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "placements", ["hand_id"], name: "index_placements_on_hand_id"
-  add_index "placements", ["player_id"], name: "index_placements_on_player_id"
+  add_index "placements", ["hand_id"], name: "index_placements_on_hand_id", using: :btree
+  add_index "placements", ["player_id"], name: "index_placements_on_player_id", using: :btree
 
   create_table "players", force: :cascade do |t|
     t.string   "name"
@@ -58,7 +62,8 @@ ActiveRecord::Schema.define(version: 20150403190722) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "tables", ["tournament_id"], name: "index_tables_on_tournament_id"
+  add_index "tables", ["tournament_id"], name: "index_tables_on_tournament_id", using: :btree
+  add_index "tables", ["uid"], name: "index_tables_on_uid", using: :btree
 
   create_table "tickets", force: :cascade do |t|
     t.integer  "player_id"
@@ -67,8 +72,8 @@ ActiveRecord::Schema.define(version: 20150403190722) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "tickets", ["player_id"], name: "index_tickets_on_player_id"
-  add_index "tickets", ["tournament_id"], name: "index_tickets_on_tournament_id"
+  add_index "tickets", ["player_id"], name: "index_tickets_on_player_id", using: :btree
+  add_index "tickets", ["tournament_id"], name: "index_tickets_on_tournament_id", using: :btree
 
   create_table "tournaments", force: :cascade do |t|
     t.string   "uid"
@@ -78,4 +83,13 @@ ActiveRecord::Schema.define(version: 20150403190722) do
     t.integer  "table_max"
   end
 
+  add_index "tournaments", ["uid"], name: "index_tournaments_on_uid", using: :btree
+
+  add_foreign_key "cards", "placements"
+  add_foreign_key "hands", "tables"
+  add_foreign_key "placements", "hands"
+  add_foreign_key "placements", "players"
+  add_foreign_key "tables", "tournaments"
+  add_foreign_key "tickets", "players"
+  add_foreign_key "tickets", "tournaments"
 end

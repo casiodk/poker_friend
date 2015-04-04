@@ -121,10 +121,10 @@ private
 	end
 
 	def generate_value_groups(c_array=card_array)
-		c_array.map.group_by { |c| c.to_s[0] } # c.to_s[0] = "As"[0] = "A"
+		c_array.map.group_by(&:val)
 	end
 
 	def generate_suite_groups(c_array=card_array)
-		c_array.map.group_by { |c| c.to_s[1] } # c.to_s[1] = "Jd"[1] = "d"
+		c_array.map.group_by(&:suite)
 	end
 end
