@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hand_id: 
+  stage: MyString
+
+two:
+  hand_id: 
+  stage: MyString

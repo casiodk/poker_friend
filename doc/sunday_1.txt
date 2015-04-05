@@ -1,4 +1,57 @@
-﻿PokerStars Hand #132865982730: Tournament #1164585221, $20+$2 USD Hold'em No Limit - Level I (10/20) - 2015/03/29 20:33:19 CET [2015/03/29 14:33:19 ET]
+﻿PokerStars Hand #132865763754: Tournament #1164585221, $20+$2 USD Hold'em No Limit - Level I (10/20) - 2015/03/29 20:30:06 CET [2015/03/29 14:30:06 ET]
+Table '1164585221 156' 9-max Seat #1 is the button
+Seat 1: FrederickH. (10000 in chips) 
+Seat 2: EXskillance (10000 in chips) 
+Seat 3: Suvinen (10000 in chips) 
+Seat 4: vadim8656 (10000 in chips) 
+Seat 5: maXXmilian (10000 in chips) 
+Seat 6: taube1981 (10000 in chips) 
+Seat 7: casiodk333 (10000 in chips) 
+Seat 8: DrimTeam2 (10000 in chips) 
+Seat 9: mossy100 (10000 in chips) 
+EXskillance: posts small blind 10
+Suvinen: posts big blind 20
+casiodk333 has returned
+*** HOLE CARDS ***
+Dealt to casiodk333 [8d Ts]
+vadim8656: folds 
+maXXmilian: raises 41 to 61 
+taube1981: calls 61
+casiodk333: folds 
+DrimTeam2: folds 
+mossy100: folds 
+FrederickH.: folds 
+EXskillance: folds 
+Suvinen: folds 
+*** FLOP *** [Tc 9c 7s]
+maXXmilian: bets 83
+taube1981: calls 83
+*** TURN *** [Tc 9c 7s] [Td]
+maXXmilian: checks 
+taube1981: bets 120
+maXXmilian: calls 120
+*** RIVER *** [Tc 9c 7s Td] [Js]
+maXXmilian: checks 
+taube1981: checks 
+*** SHOW DOWN *** 
+maXXmilian: shows [Qh Jh] (two pair, Jacks and Tens)
+taube1981: shows [Jc As] (two pair, Jacks and Tens - Ace kicker)
+taube1981 collected 558 from pot
+*** SUMMARY ***
+Total pot 558 | Rake 0 
+Board [Tc 9c 7s Td Js]
+Seat 1: FrederickH. (button) folded before Flop (didn't bet)
+Seat 2: EXskillance (small blind) folded before Flop
+Seat 3: Suvinen (big blind) folded before Flop
+Seat 4: vadim8656 folded before Flop (didn't bet)
+Seat 5: maXXmilian showed [Qh Jh] and lost with two pair, Jacks and Tens
+Seat 6: taube1981 showed [Jc As] and won (558) with two pair, Jacks and Tens
+Seat 7: casiodk333 folded before Flop (didn't bet)
+Seat 8: DrimTeam2 folded before Flop (didn't bet)
+Seat 9: mossy100 folded before Flop (didn't bet)
+
+
+PokerStars Hand #132865982730: Tournament #1164585221, $20+$2 USD Hold'em No Limit - Level I (10/20) - 2015/03/29 20:33:19 CET [2015/03/29 14:33:19 ET]
 Table '1164585221 156' 9-max Seat #5 is the button
 Seat 1: FrederickH. (10000 in chips) 
 Seat 2: EXskillance (10070 in chips) 
@@ -12,7 +65,7 @@ Seat 9: mossy100 (10000 in chips)
 taube1981: posts small blind 10
 casiodk333: posts big blind 20
 *** HOLE CARDS ***
-Dealt to casiodk333 [Qh 9d]
+Dealt to casiodk333 [Qh 9d] 
 DrimTeam2: folds 
 mossy100: folds 
 FrederickH.: folds 

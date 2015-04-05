@@ -9,12 +9,14 @@ class HandHistoryParser
 
 	def initialize(options={})
 		# for testing
-		system "rake db:reset"
-		Tournament.destroy_all
-		Table.destroy_all
-		Player.destroy_all
-		Hand.destroy_all
-		Placement.destroy_all
+		# system "rake db:reset"
+		# Tournament.destroy_all
+		# Table.destroy_all
+		# Player.destroy_all
+		# Hand.destroy_all
+		# Placement.destroy_all
+		# Round.destroy_all
+
 		@path 				= options.fetch(:path, "#{ Rails.root }/doc/sunday_1.txt")
 		@hands_array 	= []
 	end
@@ -204,14 +206,14 @@ private
 				parse_seat(num)
 			end
 
+			parse_preflop_actions
+			parse_flop_actions
+			parse_turn_actions
+			parse_river_actions
+
 		rescue RuntimeError => error
 			puts error
 		end
-
-		parse_preflop_actions
-		parse_flop_actions
-		parse_turn_actions
-		parse_river_actions
 	end
 
 	def parse_seat(num)
@@ -237,6 +239,8 @@ private
 	end
 
 	def parse_preflop_actions
+		round = create_round("preflop", 0)
+
 		if (/\*\*\* FLOP \*\*\*(...*?)$/).match(hand_txt).to_a[1].present?
 			preflop_text = (/\*\*\* HOLE CARDS \*\*\*(...*?)\*\*\* FLOP \*\*\*/m).match(hand_txt).to_a[1]
 		else
@@ -275,6 +279,10 @@ private
 
 	def parse_river_actions
 
+	end
+
+	def create_round(stage, position)
+		Round.joins(:hand).where("stage = ? AND hands.id = ?", stage, hand.id).first_or_create!(stage: stage, hand: hand, position: position)
 	end
 end
 
