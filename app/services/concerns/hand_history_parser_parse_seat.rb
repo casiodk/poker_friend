@@ -15,8 +15,10 @@ module HandHistoryParserParseSeat
         set_ticket
         set_start_chips
         set_placement
+        reset_parse_seat
       rescue RuntimeError => error
         puts error
+        reset_parse_seat
       end
     end
 

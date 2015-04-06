@@ -42,14 +42,14 @@ module HandHistoryParserParseSetup
     def set_tournament
       tournament_id = (/Tournament #([\d]*?),/).match(setup_txt)[1]
       @tournament   = Tournament.where("uid = ?", tournament_id).first_or_create(uid: tournament_id, table_max: table_max.to_i)
-      # puts "tournament:#{ tournament.id }"
+      # puts "tournament:#{ tournament.inspect }"
       runtime_error("Could not find_or_create tournament with tournament_id: #{ tournament_id }") unless tournament
     end
 
     def set_table
       table_id      = (/Table '([\d ]*?)'/).match(setup_txt)[1].remove(tournament.uid).strip
       @table        = Table.where("tournament_id = ? AND uid = ?", tournament.id, table_id).first_or_create(tournament: tournament, uid: table_id)
-      # puts "table:#{ table.id }"
+      # puts "table:#{ table.inspect }"
       runtime_error("Could not find_or_create table with table_id: #{ table_id }") unless table
     end
 
