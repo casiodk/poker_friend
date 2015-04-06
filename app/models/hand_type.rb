@@ -1,7 +1,7 @@
-class HandType
+class HandType # HandValues
 	attr_reader :card_array, :type_hash
 
-	def initialize(card_array)
+	def initialize(card_array) # community cards, glove, board, 
 		@card_array = card_array
 		@type_hash = Hash.new
 	end
