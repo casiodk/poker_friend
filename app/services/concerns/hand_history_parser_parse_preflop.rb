@@ -3,16 +3,19 @@ module HandHistoryParserParsePreflop
   extend ActiveSupport::Concern
   included do
     include HandHistoryParserParseActionTxt
-    attr_reader :preflop_txt, :round, :action_txts
+    attr_reader :preflop_txt, :round, :action_txts, :hero_name, :hero_glove
 
   private
     def parse_preflop
       reset_parse_preflop
       set_preflop_txt
       set_round
-      # hero glove
+      set_hero_name
+      set_hero_glove
+      create_glove(hero_glove, hero_name)
       set_action_txts
       parse_action_txts
+      reset_parse_preflop
       puts "---------------------------------------------------------------------"
     end
 
@@ -20,6 +23,8 @@ module HandHistoryParserParsePreflop
       @preflop_txt  = nil
       @round        = nil
       @action_txts  = []
+      @hero_name    = nil
+      @hero_glove   = nil
     end
 
     def set_preflop_txt
@@ -40,6 +45,18 @@ module HandHistoryParserParsePreflop
       runtime_error("Could not find_or_create round with hands.id: #{ hands.id } AND stage: preflop") unless round
     end
 
+    def set_hero_name
+      @hero_name = (/Dealt to (...*?) /).match(preflop_txt)[1]
+
+      # puts "hero_name: #{ hero_name }"
+    end
+
+    def set_hero_glove
+      @hero_glove = (/Dealt to #{ hero_name } \[(...*?)\]/).match(preflop_txt)[1]
+
+      # puts "hero_glove: #{ hero_glove }"
+    end
+
     def set_action_txts
       @action_txts = "#{ preflop_txt }".scan(/^.*:.*$/).reject { |action_txt| action_txt =~ /said, /i }
       # puts action_txts.join("|")
@@ -47,8 +64,8 @@ module HandHistoryParserParsePreflop
     end
 
     def parse_action_txts
-      action_txts.each do |action_txt|
-        parse_action_txt(action_txt)
+      action_txts.each_with_index do |action_txt, index|
+        parse_action_txt(action_txt, index)
       end
     end
   end

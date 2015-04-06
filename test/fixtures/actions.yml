@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  placement_id: 
+  round_id: 
+  action: MyString
+  action_txt: MyString
+  position: 1
+
+two:
+  placement_id: 
+  round_id: 
+  action: MyString
+  action_txt: MyString
+  position: 1
