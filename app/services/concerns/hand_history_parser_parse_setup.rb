@@ -61,12 +61,12 @@ module HandHistoryParserParseSetup
 
     def set_hand
       hand_id       = (/Hand #([\d]*?):/).match(setup_txt)[1]
-      
+
       existing_hand = Hand.joins(table: :tournament).where("hands.uid = ? AND tables.id = ? AND tournaments.id = ?", hand_id, table.id, tournament.id).first
       runtime_error("Hand ##{ existing_hand.id } uid: #{ existing_hand.uid } already processed") if existing_hand
 
       @hand         = Hand.create(uid: hand_id, table: table, button: button)
-      # puts "hand:#{ hand.inspect }"
+      puts "hand:#{ hand.inspect }"
       runtime_error("Could not find_or_create hand with hand_id: #{ hand_id }") unless @hand
     end
 

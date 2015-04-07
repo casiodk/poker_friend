@@ -5,6 +5,7 @@ module HandHistoryParserParseActionTxt
     attr_reader :action_txt, :action_txt_player_name, :whole_action_txt, :stripped_action, :amount, :action_txt_player, :action_txt_index
 
   private
+   # maybe round as argument here
     def parse_action_txt(action_txt, index)
       begin
         reset_parse_action_txt
@@ -82,7 +83,7 @@ module HandHistoryParserParseActionTxt
 
       runtime_error("could not find placement from  action_txt_player_name, hand.id") unless pl
 
-      a = Action.joins(:round, :placement).where("actions.position = ? AND rounds.id = ? AND placements.id = ?", action_txt_index, round.id, pl.id).first_or_create(position: action_txt_index, round: round, placement: pl, action: stripped_action, action_txt: whole_action_txt, amount: amount)
+      a = Action.joins(:round, :placement).where("actions.position = ? AND rounds.id = ? AND placements.id = ?", action_txt_index, parse_preflop_round.id, pl.id).first_or_create(position: action_txt_index, round: parse_preflop_round, placement: pl, action: stripped_action, action_txt: whole_action_txt, amount: amount)
 
       puts "ACTION: #{ a.inspect }"
       runtime_error("could not find create action") unless a

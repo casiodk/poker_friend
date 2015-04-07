@@ -8,7 +8,5 @@ listener = Listen.to("/Users/nicolaiseerup/Sites/poker_friend/doc", force_pollin
   end
 
   puts "removed absolute path: #{ removed }"
-
-  # send out listen event
 end
 listener.start # not blocking

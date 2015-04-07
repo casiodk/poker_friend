@@ -1,8 +1,6 @@
 class HandHistoryParser
 	include HandHistoryParserParseHand
 	attr_reader :path, :hands_array
-	
-	
 
 	def initialize(options={})
 		# for testing
@@ -21,6 +19,8 @@ class HandHistoryParser
 	def parse
 		generate_hands_array
 		parse_hands
+
+		# send out listen event
 	end
 
 private
@@ -39,14 +39,20 @@ private
 				@hands_array << txt unless txt.nil?
 				txt = ""
 			end
-			txt += line			
+			txt += line
 		end
 		@hands_array << txt unless txt.nil?
 	end
 
 	# MISC
 	def runtime_error(e)
-		raise RuntimeError, "############################## #{ e }"
+		puts "################################################################################################################"
+		puts "################################################################################################################"
+		puts "################################################################################################################"
+		puts ""
+		puts ""
+		puts ""
+		raise RuntimeError, "#{ e }"
 	end
 
 	def parse_hands
